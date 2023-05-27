@@ -1,0 +1,6 @@
+read -p "Enter File name : " file
+
+#count the number of vovel using grep
+count=$(grep -oi '[aeiou]' $file | wc -l)
+
+echo "File $file Contains $count Vovels"

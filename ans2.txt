@@ -1,0 +1,8 @@
+echo -n "Enter Filename : "
+read file
+if [ ! -f "$file" ]; then
+  echo "File not found!"
+  exit 1
+else
+  grep -v "^[abc]" $file
+fi

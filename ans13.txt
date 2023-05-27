@@ -1,0 +1,11 @@
+echo "Enter query (cust_no/bill_no/cust_name): "
+read query
+
+result=$(grep -i "$query" bill_data.txt)
+
+if [ -z "$result" ]; then
+  echo "No record exists for query: $query"
+else
+  echo "Bill information for $query:"
+  echo "$result"
+fi

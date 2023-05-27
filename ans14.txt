@@ -1,0 +1,48 @@
+echo "Sales data from file:- "
+sales_file="sales.dat"
+sales_data=$(cat "$sales_file")
+
+total_sales=0
+product1_sales=0
+product2_sales=0
+product3_sales=0
+best_salesman=""
+best_sales=0
+worst_salesman=""
+worst_sales=99999999
+
+while read -r line; do
+  salesman=$(echo "$line" | cut -d ':' -f 1)
+  product1=$(echo "$line" | cut -d ':' -f 2)
+  product2=$(echo "$line" | cut -d ':' -f 3)
+  product3=$(echo "$line" | cut -d ':' -f 4)
+
+  total_sales=$((total_sales + product1 + product2 + product3))
+
+  product1_sales=$((product1_sales + product1))
+  product2_sales=$((product2_sales + product2))
+  product3_sales=$((product3_sales + product3))
+
+  salesman_sales=$((product1 + product2 + product3))
+  if (( salesman_sales > best_sales )); then
+    best_salesman="$salesman"
+    best_sales=$salesman_sales
+  fi
+  if (( salesman_sales < worst_sales )); then
+    worst_salesman="$salesman"
+    worst_sales=$salesman_sales
+  fi
+done <<< "$sales_data"
+
+if [ $product1_sales -gt $product2_sales ] && [ $product1_sales -gt $product3_sales ]; then
+    highest_sold_product="Product1"
+elif [ $product2_sales -gt $product3_sales ]; then
+    highest_sold_product="Product2"
+else
+    highest_sold_product="Product3"
+fi
+
+echo "Total Sales: $total_sales"
+echo "Highest Sold Product: $highest_sold_product"
+echo "Best Salesman: $best_salesman"
+echo "Worst Salesman: $worst_salesman"

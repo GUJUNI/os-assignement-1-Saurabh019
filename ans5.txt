@@ -1,0 +1,10 @@
+echo -n "Enter Filename : "
+read file
+
+if [ ! -f $file ]; then
+  echo "File not found!"
+  exit 1
+else
+  echo "Lines starting with t or T and having either 'h' or 's' as the second character:"
+  grep -E '^[tT][h|s]' "$file"
+fi

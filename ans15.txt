@@ -1,0 +1,25 @@
+while IFS=':' read -r student_no student_name gender marks1 marks2 marks3; 
+do  
+  total_marks=$(($marks1 + $marks2 + $marks3)) 
+
+  percentage=$(echo "scale=2; ($total_marks / 3)" | bc)
+
+  if [ "$gender" = "male" ]; then
+    male_count=$((male_count+1))
+  else
+    female_count=$((female_count+1))
+  fi
+  if (( $(echo "$percentage > 40" | bc -l) )); then   # check if percentage is greater than 40
+       pass_count=$((pass_count + 1))                  # increment pass count
+  else
+       fail_count=$((fail_count+1))
+  fi 
+  echo "$student_no-$student_name-$gender-$marks1-$marks2-$marks3-$total_marks-$percentage"
+
+done < Students.dat
+
+echo "Male Count: $male_count"
+echo "Female Count: $female_count"
+
+echo "Pass Count: $pass_count"
+echo "Fail Count: $fail_count"
